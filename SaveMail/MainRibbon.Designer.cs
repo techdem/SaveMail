@@ -57,14 +57,16 @@
             // 
             // button1
             // 
+            this.button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.button1.Label = "Save Selected";
             this.button1.Name = "button1";
+            this.button1.ShowImage = true;
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Button1_Click);
             // 
             // MainRibbon
             // 
             this.Name = "MainRibbon";
-            this.RibbonType = "Microsoft.Outlook.Mail.Read";
+            this.RibbonType = "Microsoft.Outlook.Explorer";
             this.Tabs.Add(this.tab1);
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.MainRibbon_Load);
             this.tab1.ResumeLayout(false);
