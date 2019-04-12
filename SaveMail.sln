@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveMail", "SaveMail\SaveMail.csproj", "{58842754-91F0-4075-A203-51BE81882D80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58842754-91F0-4075-A203-51BE81882D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58842754-91F0-4075-A203-51BE81882D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58842754-91F0-4075-A203-51BE81882D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58842754-91F0-4075-A203-51BE81882D80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A12D24DB-41CE-4962-8215-0DA70B484C73}
+	EndGlobalSection
+EndGlobal
