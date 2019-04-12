@@ -20,19 +20,21 @@ namespace SaveMail
             var browsePath = new FolderBrowserDialog();
             String emailName = "";
 
-            foreach(MailItem email in new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection)
+            DialogResult result = browsePath.ShowDialog();
+
+            foreach (MailItem email in new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection)
             {
-                if(email != null)
+                if (email != null)
                 {
-                    if(email.SenderEmailType == "EX")
+                    if (email.SenderEmailType == "EX")
                     {
                         AddressEntry address = email.Sender;
 
-                        if(address.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry || address.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
+                        if (address.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry || address.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
                         {
                             ExchangeUser internalAddress = address.GetExchangeUser();
 
-                            if(internalAddress != null)
+                            if (internalAddress != null)
                             {
                                 emailName = internalAddress.PrimarySmtpAddress;
                             }
@@ -43,15 +45,13 @@ namespace SaveMail
                         emailName = email.SenderEmailAddress;
                     }
 
-                    DialogResult result = browsePath.ShowDialog();
-
-                    if(result == DialogResult.OK && !string.IsNullOrWhiteSpace(browsePath.SelectedPath))
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(browsePath.SelectedPath))
                     {
-                        email.SaveAs(browsePath.SelectedPath+emailName+".msg", OlSaveAsType.olMSG);
-                        MessageBox.Show("Item saved in: " + browsePath.SelectedPath);
+                        email.SaveAs(browsePath.SelectedPath + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                     }
                 }
             }
+            MessageBox.Show("Saved successfully in:\n\n" + browsePath.SelectedPath);
         }
     }
 }
