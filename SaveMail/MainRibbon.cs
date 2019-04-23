@@ -54,4 +54,14 @@ namespace SaveMail
             MessageBox.Show("Saved successfully in:\n\n" + browsePath.SelectedPath);
         }
     }
+
+    public class MockRibbon
+    {
+        public Object TestBrowser()
+        {
+            Object browseObject = new FolderBrowserDialog();
+
+            return browseObject;
+        }
+    }
 }
