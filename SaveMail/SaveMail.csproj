@@ -159,17 +159,17 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="MainRibbon.cs">
+    <Compile Include="MailRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MainRibbon.Designer.cs">
-      <DependentUpon>MainRibbon.cs</DependentUpon>
+    <Compile Include="MailRibbon.Designer.cs">
+      <DependentUpon>MailRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="MainRibbon.resx">
-      <DependentUpon>MainRibbon.cs</DependentUpon>
+    <EmbeddedResource Include="MailRibbon.resx">
+      <DependentUpon>MailRibbon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -188,6 +188,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SaveMail.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>

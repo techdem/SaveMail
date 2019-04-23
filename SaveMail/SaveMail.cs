@@ -1,27 +1,27 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Outlook;
-using Microsoft.Office.Tools.Ribbon;
 
 namespace SaveMail
 {
-    public partial class MainRibbon
+    public class SaveMail
     {
-        static FolderBrowserDialog fbd;
-        String emailName = "";
+        static String emailName = "";
 
-        private void MainRibbon_Load(object sender, RibbonUIEventArgs e)
+        public static object[] GetPath(FolderBrowserDialog fbd)
         {
-            fbd = new FolderBrowserDialog();
+            DialogResult dialogResult = fbd.ShowDialog();
+            String selectedPath = fbd.SelectedPath;
+
+            return new object[] { dialogResult, selectedPath };
         }
 
-        private void Button1_Click(object sender, RibbonControlEventArgs e)
+        public static bool SaveSelected(object[] savePath)
         {
-            Object[] getPath = GetPath(fbd);
-
             foreach (MailItem email in new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection)
             {
                 if (email != null)
@@ -45,21 +45,14 @@ namespace SaveMail
                         emailName = email.SenderEmailAddress;
                     }
 
-                    if ((DialogResult)getPath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)getPath[1]))
+                    if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
                     {
-                        email.SaveAs(getPath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                        email.SaveAs(savePath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                     }
                 }
             }
-            MessageBox.Show("Saved successfully in:\n\n" + (String)getPath[2]);
-        }
 
-        public static object[] GetPath(FolderBrowserDialog fbd)
-        {
-            DialogResult dialogResult = fbd.ShowDialog();
-            String selectedPath = fbd.SelectedPath;
-
-            return new object[] { dialogResult, selectedPath };
+            return true;
         }
     }
 }
