@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveMail", "SaveMail\SaveMail.csproj", "{58842754-91F0-4075-A203-51BE81882D80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDD", "TDD\TDD.csproj", "{8B46E832-DCF5-4C72-B24A-596426DC7361}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsForSaveMail", "TDD\UnitTestsForSaveMail.csproj", "{8B46E832-DCF5-4C72-B24A-596426DC7361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

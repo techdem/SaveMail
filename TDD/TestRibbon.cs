@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SaveMail;
 
-namespace TDD
+namespace UnitTests
 {
     [TestClass]
-    public class MockRibbon
+    public class TestMainRibbon
     {
         [TestMethod]
-        public void TestBrowsers()
+        public void TestGetPath()
         {
-            SaveMail.MockRibbon mockRibbon = new SaveMail.MockRibbon();
-
-            Assert.IsInstanceOfType(mockRibbon.TestBrowser(), typeof(System.Windows.Forms.FolderBrowserDialog));
+            object[] testGetPath = MainRibbon.GetPath(new FolderBrowserDialog());
+            Assert.AreEqual(DialogResult.OK, testGetPath[0]);
+            Assert.IsFalse(string.IsNullOrWhiteSpace((String)testGetPath[1]));
         }
     }
 }

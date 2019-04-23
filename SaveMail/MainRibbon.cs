@@ -10,17 +10,17 @@ namespace SaveMail
 {
     public partial class MainRibbon
     {
+        static FolderBrowserDialog fbd;
+        String emailName = "";
+
         private void MainRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-
+            fbd = new FolderBrowserDialog();
         }
 
         private void Button1_Click(object sender, RibbonControlEventArgs e)
         {
-            var browsePath = new FolderBrowserDialog();
-            String emailName = "";
-
-            DialogResult result = browsePath.ShowDialog();
+            Object[] getPath = GetPath(fbd);
 
             foreach (MailItem email in new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection)
             {
@@ -45,23 +45,21 @@ namespace SaveMail
                         emailName = email.SenderEmailAddress;
                     }
 
-                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(browsePath.SelectedPath))
+                    if ((DialogResult)getPath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)getPath[1]))
                     {
-                        email.SaveAs(browsePath.SelectedPath + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                        email.SaveAs(getPath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                     }
                 }
             }
-            MessageBox.Show("Saved successfully in:\n\n" + browsePath.SelectedPath);
+            MessageBox.Show("Saved successfully in:\n\n" + (String)getPath[2]);
         }
-    }
 
-    public class MockRibbon
-    {
-        public Object TestBrowser()
+        public static object[] GetPath(FolderBrowserDialog fbd)
         {
-            Object browseObject = new FolderBrowserDialog();
+            DialogResult dialogResult = fbd.ShowDialog();
+            String selectedPath = fbd.SelectedPath;
 
-            return browseObject;
+            return new object[] { dialogResult, selectedPath };
         }
     }
 }
