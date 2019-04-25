@@ -20,12 +20,11 @@ namespace SaveMail
         {
             Selection selectedMail = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
             MailItem[] emailItems = new MailItem[selectedMail.Count];
-
             object[] savePath = SaveMail.GetPath(fbd);
 
             for (int i = 0; i < emailItems.Length; i++)
             {
-                emailItems[i] = selectedMail[i];
+                emailItems[i] = selectedMail[i+1];
             }
 
             if (SaveMail.SaveSelected(savePath, emailItems) == true)
