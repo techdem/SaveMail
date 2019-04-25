@@ -11,16 +11,24 @@ namespace SaveMail
     public partial class MailRibbon
     {
         FolderBrowserDialog fbd;
-        private void MainRibbon_Load(object sender, RibbonUIEventArgs e)
+        private void MailRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             fbd = new FolderBrowserDialog();
         }
 
         private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
         {
+            Selection selectedMail = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
+            MailItem[] emailItems = new MailItem[selectedMail.Count];
+
             object[] savePath = SaveMail.GetPath(fbd);
 
-            if (SaveMail.SaveSelected(savePath) == true)
+            for (int i = 0; i < emailItems.Length; i++)
+            {
+                emailItems[i] = selectedMail[i];
+            }
+
+            if (SaveMail.SaveSelected(savePath, emailItems) == true)
             {
                 MessageBox.Show("Saved successfully in:\n\n" + (String)savePath[1]);
             }

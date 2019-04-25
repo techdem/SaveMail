@@ -44,28 +44,44 @@ namespace SaveMail
             return emailName;
         }
 
-        public static bool SaveSelected(object[] savePath)
+        public static bool SaveSelected(object[] savePath, MailItem[] emailItems)
         {
-            String emailName;
+            String emailSender;
 
-            foreach (MailItem email in new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection)
+            foreach (MailItem email in emailItems)
             {
-                if (email != null)
+                if (email != null && PathCheck(savePath, email.Subject))
                 {
-                    emailName = GetEmailOrigin(email);
-
-                    if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
-                    {
-                        email.SaveAs(savePath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailName + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    emailSender = GetEmailOrigin(email);
+                    email.SaveAs(savePath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                }
+                else
+                {
+                    return false;
                 }
             }
 
             return true;
+        }
+
+        public static bool PathCheck(object[] savePath, String emailName)
+        {
+            if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
+            {
+                char[] checkSymbols = emailName.ToCharArray();
+
+                foreach (char c in checkSymbols)
+                {
+                    if (c == '\\' || c == '/' || c == ':' || c == '*' || c == '?' || c == '"' || c == '<' || c == '>' || c == '|')
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

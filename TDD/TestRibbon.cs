@@ -9,6 +9,10 @@ namespace UnitTests
     [TestClass]
     public class TestSaveMail
     {
+        static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
+        Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
+        //Explorer mockExplorer = outlookApplication.Explorers.Add(new Folder(), new OlFolderDisplayMode());
+
         [TestMethod]
         public void TestGetPath()
         {
@@ -21,8 +25,6 @@ namespace UnitTests
         [TestMethod]
         public void TestGetEmailOrigin()
         {
-            Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
-            Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
             MailItem internalMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             internalMailItem.Sender = outlookAddress.AddressEntry;
 
@@ -32,11 +34,24 @@ namespace UnitTests
         [TestMethod]
         public void TestSaveSelected()
         {
-            object[] mockOkResult = new object[] { DialogResult.OK, "savePath" };
-            object[] mockNegativeResult = new object[] { DialogResult.OK, " " };
+            object[] okResult = new object[] { DialogResult.OK, "savePath" };
+            object[] negativeResult = new object[] { DialogResult.Cancel, " " };
+            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            validMailItem.Subject = "valid email subject";
+            validMailItem.Sender = outlookAddress.AddressEntry;
+            MailItem[] selectedItems = new MailItem[] { validMailItem };
+            
+            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems));
+            Assert.IsFalse(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems));
+        }
 
-            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(mockOkResult));
-            Assert.IsFalse(SaveMail.SaveMail.SaveSelected(mockNegativeResult));
+        [TestMethod]
+        public void TestPathCheck()
+        {
+            object[] mockOkResult = new object[] { DialogResult.OK, "savePath" };
+            String invalidEmailSubject = "\\/:*?\"<>|";
+
+            Assert.IsFalse(SaveMail.SaveMail.PathCheck(mockOkResult, invalidEmailSubject));
         }
     }
 }
