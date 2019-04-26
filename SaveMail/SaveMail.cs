@@ -21,7 +21,7 @@ namespace SaveMail
 
         public static String GetEmailOrigin(MailItem email)
         {
-            String emailName = "";
+            String emailSender = "";
 
             if (email.SenderEmailType == "EX")
             {
@@ -33,16 +33,16 @@ namespace SaveMail
 
                     if (internalAddress != null)
                     {
-                        emailName = internalAddress.PrimarySmtpAddress;
+                        emailSender = internalAddress.PrimarySmtpAddress;
                     }
                 }
             }
             else
             {
-                emailName = email.Sender.Address;
+                emailSender = email.Sender.Address;
             }
 
-            return emailName;
+            return emailSender;
         }
 
         public static bool SaveSelected(object[] savePath, MailItem[] emailItems)
@@ -51,24 +51,25 @@ namespace SaveMail
 
             foreach (MailItem email in emailItems)
             {
-                if (email != null && PathCheck(savePath, email.Subject))
+                if (email != null && PathCheck(savePath, email))
                 {
                     emailSender = GetEmailOrigin(email);
-                    email.SaveAs(savePath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
-
-                    return true;
+                    email.SaveAs(savePath[1] + "\\" + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                }
+                else
+                {
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
-        public static bool PathCheck(object[] savePath, String emailName)
+        public static bool PathCheck(object[] savePath, MailItem email)
         {
             if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
             {
-                Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
-
-                replaceIllegalCharacters.Replace(emailName, "");
+                Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|ÁáÉéÍíÓóÚú]");
+                email.Subject = replaceIllegalCharacters.Replace(email.Subject, "");
 
                 return true;
             }

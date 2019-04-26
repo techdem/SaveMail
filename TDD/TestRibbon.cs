@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace UnitTests
 {
@@ -33,22 +34,24 @@ namespace UnitTests
         [TestMethod]
         public void TestSaveSelected()
         {
-            object[] okResult = new object[] { DialogResult.OK, "savePath" };
+            object[] okResult = new object[] { DialogResult.OK, "C:\\" };
             object[] negativeResult = new object[] { DialogResult.Cancel, " " };
             MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
-            validMailItem.Subject = "valid email subject";
             validMailItem.Sender = outlookAddress.AddressEntry;
+            validMailItem.Subject = "valid email subject";
             MailItem[] selectedItems = new MailItem[] { validMailItem };
             
             Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems));
             Assert.IsFalse(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems));
+            File.Delete("C:\\01-01-4501 test@internal.address valid email subject.msg");
         }
 
         [TestMethod]
         public void TestPathCheck()
         {
-            object[] mockOkResult = new object[] { DialogResult.OK, "savePath" };
-            String invalidEmailSubject = "\\/:*?\"<>|";
+            object[] mockOkResult = new object[] { DialogResult.OK, "valid path" };
+            MailItem invalidEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            invalidEmailSubject.Subject = "\\/:*?\"<>|";
 
             Assert.IsTrue(SaveMail.SaveMail.PathCheck(mockOkResult, invalidEmailSubject));
         }
