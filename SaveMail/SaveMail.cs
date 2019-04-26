@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -54,33 +55,23 @@ namespace SaveMail
                 {
                     emailSender = GetEmailOrigin(email);
                     email.SaveAs(savePath[1] + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
-                }
-                else
-                {
-                    return false;
+
+                    return true;
                 }
             }
-
-            return true;
+            return false;
         }
 
         public static bool PathCheck(object[] savePath, String emailName)
         {
             if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
             {
-                char[] checkSymbols = emailName.ToCharArray();
+                Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
 
-                foreach (char c in checkSymbols)
-                {
-                    if (c == '\\' || c == '/' || c == ':' || c == '*' || c == '?' || c == '"' || c == '<' || c == '>' || c == '|')
-                    {
-                        return false;
-                    }
-                }
+                replaceIllegalCharacters.Replace(emailName, "");
 
                 return true;
             }
-
             return false;
         }
     }

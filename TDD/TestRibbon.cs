@@ -11,7 +11,6 @@ namespace UnitTests
     {
         static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
         Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
-        //Explorer mockExplorer = outlookApplication.Explorers.Add(new Folder(), new OlFolderDisplayMode());
 
         [TestMethod]
         public void TestGetPath()
@@ -51,7 +50,7 @@ namespace UnitTests
             object[] mockOkResult = new object[] { DialogResult.OK, "savePath" };
             String invalidEmailSubject = "\\/:*?\"<>|";
 
-            Assert.IsFalse(SaveMail.SaveMail.PathCheck(mockOkResult, invalidEmailSubject));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(mockOkResult, invalidEmailSubject));
         }
     }
 }
