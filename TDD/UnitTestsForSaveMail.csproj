@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="TestRibbon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
