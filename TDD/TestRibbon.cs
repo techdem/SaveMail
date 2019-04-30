@@ -49,11 +49,24 @@ namespace UnitTests
         [TestMethod]
         public void TestPathCheck()
         {
-            object[] mockOkResult = new object[] { DialogResult.OK, "valid path" };
+            object[] okResult = new object[] { DialogResult.OK, "valid path" };
+            object[] negativeResult = new object[] { DialogResult.Cancel, " " };
             MailItem invalidEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             invalidEmailSubject.Subject = "\\/:*?\"<>|";
 
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(mockOkResult, invalidEmailSubject));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, invalidEmailSubject));
+            Assert.IsFalse(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject));
+
+        }
+
+        [TestMethod]
+        public void TestBlockRootPathCheck()
+        {
+            object[] okResult = new object[] { DialogResult.OK, "C:\\" };
+            MailItem mailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            mailItem.Subject = "test";
+
+            Assert.IsFalse(SaveMail.SaveMail.PathCheck(okResult, mailItem));
         }
     }
 }

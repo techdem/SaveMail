@@ -66,13 +66,20 @@ namespace SaveMail
 
         public static bool PathCheck(object[] savePath, MailItem email)
         {
-            if ((DialogResult)savePath[0] == DialogResult.OK && !string.IsNullOrWhiteSpace((String)savePath[1]))
+            if (((String)savePath[1]).Equals("C:\\"))
             {
-                Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|ÁáÉéÍíÓóÚú]");
+                return false;
+            }
+
+            if ((DialogResult)savePath[0] == DialogResult.OK 
+                && !string.IsNullOrWhiteSpace((String)savePath[1]))
+            {
+                Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
                 email.Subject = replaceIllegalCharacters.Replace(email.Subject, "");
 
                 return true;
             }
+
             return false;
         }
     }
