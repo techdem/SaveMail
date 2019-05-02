@@ -9,9 +9,14 @@ namespace SaveMail
 {
     public class SaveMailUI
     {
-        public IDictionary<String, String> ShowDialog()
+        public static Dictionary<object, object> ShowDialog()
         {
-            return new Dictionary<String, String>() { { "dialogResult", "OK" }, { "selectedPath", "C:\\" } };
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult dialogResult = fbd.ShowDialog();
+            String selectedPath = fbd.SelectedPath;
+
+            return new Dictionary<object, object>() { { "dialogResult", dialogResult },
+                { "selectedPath", selectedPath } };
         }
     }
 }

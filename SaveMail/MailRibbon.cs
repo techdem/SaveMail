@@ -10,17 +10,15 @@ namespace SaveMail
 {
     public partial class MailRibbon
     {
-        FolderBrowserDialog fbd;
         private void MailRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-            fbd = new FolderBrowserDialog();
         }
 
         private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
         {
             Selection selectedMail = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
             MailItem[] emailItems = new MailItem[selectedMail.Count];
-            object[] savePath = SaveMail.GetPath(fbd);
+            Dictionary<object, object> savePath = SaveMail.GetPath();
 
             for (int i = 0; i < emailItems.Length; i++)
             {

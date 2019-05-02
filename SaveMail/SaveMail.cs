@@ -11,12 +11,12 @@ namespace SaveMail
 {
     public class SaveMail
     {
-        public static object[] GetPath(FolderBrowserDialog fbd)
+        public static Dictionary<object, object> GetPath()
         {
-            DialogResult dialogResult = fbd.ShowDialog();
-            String selectedPath = fbd.SelectedPath;
+            Dictionary<object,object> showDialog = SaveMailUI.ShowDialog();
 
-            return new object[] { dialogResult, selectedPath };
+            return new Dictionary<object, object> { { "dialogResult", showDialog["dialogResult"] },
+                { "selectedPath", showDialog["selectedPath"] } };
         }
 
         public static String GetEmailOrigin(MailItem email)
@@ -45,7 +45,7 @@ namespace SaveMail
             return emailSender;
         }
 
-        public static bool SaveSelected(object[] savePath, MailItem[] emailItems)
+        public static bool SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
         {
             String emailSender;
 
@@ -54,7 +54,7 @@ namespace SaveMail
                 if (email != null && PathCheck(savePath, email))
                 {
                     emailSender = GetEmailOrigin(email);
-                    email.SaveAs(savePath[1] + "\\" + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                 }
                 else
                 {
@@ -64,15 +64,15 @@ namespace SaveMail
             return true;
         }
 
-        public static bool PathCheck(object[] savePath, MailItem email)
+        public static bool PathCheck(Dictionary<object, object> savePath, MailItem email)
         {
-            if (((String)savePath[1]).Equals("C:\\"))
+            if (((String)savePath["selectedPath"]).Equals("C:\\"))
             {
                 return false;
             }
 
-            if ((DialogResult)savePath[0] == DialogResult.OK 
-                && !string.IsNullOrWhiteSpace((String)savePath[1]))
+            if ((DialogResult)savePath["dialogResult"] == DialogResult.OK 
+                && !string.IsNullOrWhiteSpace((String)savePath["selectedPath"]))
             {
                 Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
                 email.Subject = replaceIllegalCharacters.Replace(email.Subject, "");

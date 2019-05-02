@@ -11,13 +11,14 @@ namespace UnitTests
     public class TestUI
     {
         [TestMethod]
-        public void SaveMailUI()
+        public void TestShowDialog()
         {
-            SaveMailUI saveMailUI = new SaveMailUI();
-            IDictionary<String,String> showDialog = saveMailUI.ShowDialog();
-            Assert.IsInstanceOfType(showDialog, typeof(IDictionary<String,String>));
-            Assert.AreEqual(showDialog["dialogResult"], "OK");
-            Assert.AreEqual(showDialog["selectedPath"], "C:\\");
+            Dictionary<object, object> showDialog = SaveMailUI.ShowDialog();
+            Assert.IsInstanceOfType(showDialog, typeof(Dictionary<object, object>));
+            
+            //MessageBox.Show(showDialog["dialogResult"]);
+            Assert.AreEqual(showDialog["dialogResult"], DialogResult.OK);
+            Assert.IsTrue(showDialog["selectedPath"].Equals("C:\\"));
         }
     }
 }
