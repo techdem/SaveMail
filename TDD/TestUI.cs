@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,8 +14,10 @@ namespace UnitTests
         public void SaveMailUI()
         {
             SaveMailUI saveMailUI = new SaveMailUI();
-            
-            Assert.IsInstanceOfType(saveMailUI.GetPath(), typeof(object));
+            IDictionary<String,String> showDialog = saveMailUI.ShowDialog();
+            Assert.IsInstanceOfType(showDialog, typeof(IDictionary<String,String>));
+            Assert.AreEqual(showDialog["dialogResult"], "OK");
+            Assert.AreEqual(showDialog["selectedPath"], "C:\\");
         }
     }
 }
