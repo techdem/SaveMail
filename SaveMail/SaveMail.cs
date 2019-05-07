@@ -80,7 +80,7 @@ namespace SaveMail
                 return "charactersReplaced";
             }
 
-            return "fail";
+            return "failed";
         }
     }
 }

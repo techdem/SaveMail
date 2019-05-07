@@ -35,6 +35,11 @@ namespace SaveMail
             {
                 MessageBox.Show("Invalid path, please choose a different folder.", "SaveMail");
             }
+
+            if (input.Equals("failed"))
+            {
+                MessageBox.Show("Invalid path, please choose a different folder.", "SaveMail");
+            }
         }
     }
 }

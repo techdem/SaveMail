@@ -14,8 +14,8 @@ namespace UnitTests
     {
         static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
         Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
-        Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", "C:\\TEST" } };
-        Dictionary<object, object> negativeResult = new Dictionary<object, object> { { "dialogResult", DialogResult.Cancel }, { "selectedPath", " " } };
+        readonly Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", "C:\\TEST" } };
+        readonly Dictionary<object, object> negativeResult = new Dictionary<object, object> { { "dialogResult", DialogResult.Cancel }, { "selectedPath", " " } };
 
         [TestMethod]
         public void TestGetPath()
@@ -44,7 +44,7 @@ namespace UnitTests
             MailItem[] selectedItems = new MailItem[] { validMailItem };
             
             Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems).Equals("success"));
-            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems).Equals("fail"));
+            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems).Equals("failed"));
             File.Delete("C:\\TEST\\01-01-4501 test@internal.address valid email subject.msg");
         }
 
@@ -55,7 +55,7 @@ namespace UnitTests
             invalidEmailSubject.Subject = "\\/:*?\"<>|";
 
             Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, invalidEmailSubject).Equals("charactersReplaced"));
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject).Equals("fail"));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject).Equals("failed"));
 
         }
 
