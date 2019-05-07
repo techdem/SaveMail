@@ -18,7 +18,7 @@ namespace SaveMail
         {
             Selection selectedMail = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
             MailItem[] emailItems = new MailItem[selectedMail.Count];
-            Dictionary<object, object> savePath = SaveMail.GetPath();
+            Dictionary<object, object> savePath = SaveMailUI.ShowDialog();
 
             for (int i = 0; i < emailItems.Length; i++)
             {
@@ -27,11 +27,11 @@ namespace SaveMail
 
             if (SaveMail.SaveSelected(savePath, emailItems) == true)
             {
-                MessageBox.Show("Saved successfully in:\n\n" + (String)savePath[1]);
+                SaveMailUI.Confirmation("success");
             }
             else
             {
-                MessageBox.Show("Items not saved");
+                SaveMailUI.Confirmation("fail");
             }
         }
     }

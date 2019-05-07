@@ -13,10 +13,20 @@ namespace SaveMail
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             DialogResult dialogResult = fbd.ShowDialog();
-            String selectedPath = fbd.SelectedPath;
 
-            return new Dictionary<object, object>() { { "dialogResult", dialogResult },
-                { "selectedPath", selectedPath } };
+            return SaveMail.GetPath(dialogResult, fbd.SelectedPath);
+        }
+
+        public static void Confirmation(String output)
+        {
+            if (output.Equals("success"))
+            {
+                MessageBox.Show("Saved successfully");
+            }
+            else
+            {
+                MessageBox.Show("Items not saved.");
+            }
         }
     }
 }

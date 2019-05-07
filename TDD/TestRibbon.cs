@@ -18,6 +18,15 @@ namespace UnitTests
         Dictionary<object, object> negativeResult = new Dictionary<object, object> { { "dialogResult", DialogResult.Cancel }, { "selectedPath", " " } };
 
         [TestMethod]
+        public void TestGetPath()
+        {
+            Dictionary<object, object> getPath = SaveMail.SaveMail.GetPath(DialogResult.OK, "C:\\");
+
+            Assert.AreEqual(getPath["dialogResult"], DialogResult.OK);
+            Assert.IsTrue(getPath["selectedPath"].Equals("C:\\"));
+        }
+
+        [TestMethod]
         public void TestGetEmailOrigin()
         {
             MailItem internalMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);

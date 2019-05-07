@@ -11,12 +11,10 @@ namespace SaveMail
 {
     public class SaveMail
     {
-        public static Dictionary<object, object> GetPath()
+        public static Dictionary<object, object> GetPath(DialogResult dialogResult, String selectedPath)
         {
-            Dictionary<object,object> showDialog = SaveMailUI.ShowDialog();
-
-            return new Dictionary<object, object> { { "dialogResult", showDialog["dialogResult"] },
-                { "selectedPath", showDialog["selectedPath"] } };
+            return new Dictionary<object, object>() { { "dialogResult", dialogResult },
+                { "selectedPath", selectedPath } };
         }
 
         public static String GetEmailOrigin(MailItem email)
@@ -27,7 +25,8 @@ namespace SaveMail
             {
                 AddressEntry address = email.Sender;
 
-                if (address.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry || address.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
+                if (address.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry
+                    || address.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
                 {
                     ExchangeUser internalAddress = address.GetExchangeUser();
 
