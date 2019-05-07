@@ -58,6 +58,7 @@
             // SaveSelectedButton
             // 
             this.SaveSelectedButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.SaveSelectedButton.Image = global::SaveMail.Properties.Resources.OPW_Mark_Core_Colour_copy;
             this.SaveSelectedButton.Label = "Save Selected";
             this.SaveSelectedButton.Name = "SaveSelectedButton";
             this.SaveSelectedButton.ShowImage = true;

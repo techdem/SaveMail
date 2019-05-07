@@ -67,6 +67,7 @@ namespace SaveMail
         {
             if (((String)savePath["selectedPath"]).Equals("C:\\"))
             {
+                SaveMailUI.Notify("invalidPath");
                 return false;
             }
 
