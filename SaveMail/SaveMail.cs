@@ -44,31 +44,31 @@ namespace SaveMail
             return emailSender;
         }
 
-        public static bool SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
+        public static String SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
         {
             String emailSender;
 
             foreach (MailItem email in emailItems)
             {
-                if (email != null && PathCheck(savePath, email))
+                String pathCheckResult = PathCheck(savePath, email);
+                if (email != null && pathCheckResult.Equals("charactersReplaced"))
                 {
                     emailSender = GetEmailOrigin(email);
                     email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                 }
                 else
                 {
-                    return false;
+                    return pathCheckResult;
                 }
             }
-            return true;
+            return "success";
         }
 
-        public static bool PathCheck(Dictionary<object, object> savePath, MailItem email)
+        public static String PathCheck(Dictionary<object, object> savePath, MailItem email)
         {
             if (((String)savePath["selectedPath"]).Equals("C:\\"))
             {
-                SaveMailUI.Notify("invalidPath");
-                return false;
+                return "invalidPath";
             }
 
             if ((DialogResult)savePath["dialogResult"] == DialogResult.OK 
@@ -77,10 +77,10 @@ namespace SaveMail
                 Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
                 email.Subject = replaceIllegalCharacters.Replace(email.Subject, "");
 
-                return true;
+                return "charactersReplaced";
             }
 
-            return false;
+            return "fail";
         }
     }
 }

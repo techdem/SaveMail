@@ -43,8 +43,8 @@ namespace UnitTests
             validMailItem.Subject = "valid email subject";
             MailItem[] selectedItems = new MailItem[] { validMailItem };
             
-            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems));
-            Assert.IsFalse(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems));
+            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems).Equals("success"));
+            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems).Equals("fail"));
             File.Delete("C:\\TEST\\01-01-4501 test@internal.address valid email subject.msg");
         }
 
@@ -54,8 +54,8 @@ namespace UnitTests
             MailItem invalidEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             invalidEmailSubject.Subject = "\\/:*?\"<>|";
 
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, invalidEmailSubject));
-            Assert.IsFalse(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, invalidEmailSubject).Equals("charactersReplaced"));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject).Equals("fail"));
 
         }
 
@@ -66,7 +66,7 @@ namespace UnitTests
             mailItem.Subject = "test";
             Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", "C:\\" } };
 
-            Assert.IsFalse(SaveMail.SaveMail.PathCheck(okResult, mailItem));
+            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, mailItem).Equals("invalidPath"));
         }
     }
 }

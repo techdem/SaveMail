@@ -25,14 +25,7 @@ namespace SaveMail
                 emailItems[i] = selectedMail[i+1];
             }
 
-            if (SaveMail.SaveSelected(savePath, emailItems) == true)
-            {
-                SaveMailUI.Confirmation("success");
-            }
-            else
-            {
-                SaveMailUI.Confirmation("fail");
-            }
+            SaveMailUI.Confirmation(SaveMail.SaveSelected(savePath, emailItems));
         }
     }
 }

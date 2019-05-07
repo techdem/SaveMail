@@ -25,7 +25,7 @@ namespace SaveMail
             }
             else
             {
-                MessageBox.Show("Items not saved.", "SaveMail");
+                Notify(input);
             }
         }
 
