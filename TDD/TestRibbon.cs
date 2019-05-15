@@ -45,7 +45,7 @@ namespace UnitTests
             
             Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems).Equals("success"));
             Assert.IsTrue(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems).Equals("failed"));
-            File.Delete("C:\\TEST\\01-01-4501 test@internal.address valid email subject.msg");
+            File.Delete("C:\\TEST\\4501-01-01 test@internal.address valid email subject.msg");
         }
 
         [TestMethod]
