@@ -54,7 +54,7 @@ namespace SaveMail
                 if (email != null && pathCheckResult.Equals("charactersReplaced"))
                 {
                     emailSender = GetEmailOrigin(email);
-                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("dd-MM-yyyy") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
                 }
                 else
                 {
