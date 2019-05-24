@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Collections.Generic;
 
-namespace UnitTests
+namespace UnitTestsForSaveMail
 {
     [TestClass]
     public class TestSaveMail
