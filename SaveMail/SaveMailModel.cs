@@ -17,11 +17,14 @@ namespace SaveMail
             Selection selectedEmails = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
             List<object> emailItems = new List<object>();
 
-            foreach (MailItem item in selectedEmails)
+            foreach (object item in selectedEmails)
             {
+                if (!(item is MailItem))
+                {
+                    return new List<object>();
+                }
                 emailItems.Add(item);
             }
-
             return emailItems;
         }
 

@@ -34,6 +34,11 @@ namespace SaveMail
         // Notify the user if something has gone wrong
         public static void Notify(String input)
         {
+            if (input.Equals("invalidSelection"))
+            {
+                MessageBox.Show("Please make sure selected e-mails don't contain calendar appointments!", "SaveMail");
+            }
+
             if (input.Equals("pathInvalid"))
             {
                 MessageBox.Show("Invalid path, please choose a different folder.", "SaveMail");

@@ -20,9 +20,15 @@ namespace SaveMail
         {
             List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
 
-            Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
-
-            SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails));
+            if (selectedEmails.Count != 0)
+            {
+                Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
+                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails));
+            }
+            else
+            {
+                SaveMailView.Notify("invalidSelection");
+            }
         }
 
         // Method that invokes a sanity check for the path and saves e-mails to drive
@@ -34,7 +40,7 @@ namespace SaveMail
             {
                 String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
 
-                if (email != null && pathCheckResult.Equals("pathOK"))
+                if (pathCheckResult.Equals("pathOK"))
                 {
                     emailSender = SaveMailModel.GetEmailOrigin(email);
                     email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
