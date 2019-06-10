@@ -18,7 +18,7 @@ namespace SaveMail
         // Main method with at event listener for the plugin button
         private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
         {
-            MailItem[] selectedEmails = SaveMailModel.GetSelectedEmails();
+            List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
 
             Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
 
@@ -26,7 +26,7 @@ namespace SaveMail
         }
 
         // Method that invokes a sanity check for the path and saves e-mails to drive
-        public static String SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
+        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
         {
             String emailSender;
 

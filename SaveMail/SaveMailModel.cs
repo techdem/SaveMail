@@ -11,14 +11,14 @@ namespace SaveMail
 {
     public class SaveMailModel
     {
-        public static MailItem[] GetSelectedEmails()
+        public static List<object> GetSelectedEmails()
         {
             Selection selectedEmails = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
-            MailItem[] emailItems = new MailItem[selectedEmails.Count];
+            List<object> emailItems = new List<object>();
 
-            for (int i = 0; i < emailItems.Length; i++)
+            foreach (MailItem item in selectedEmails)
             {
-                emailItems[i] = selectedEmails[i + 1];
+                emailItems.Add(item);
             }
 
             return emailItems;

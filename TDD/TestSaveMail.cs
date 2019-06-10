@@ -41,7 +41,7 @@ namespace UnitTestsForSaveMail
             MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
             validMailItem.Subject = "valid email subject";
-            MailItem[] selectedItems = new MailItem[] { validMailItem };
+            List<object> selectedItems = new List<object> { validMailItem };
             
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
