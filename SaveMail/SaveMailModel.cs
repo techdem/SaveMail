@@ -9,8 +9,21 @@ using System.Windows.Forms;
 
 namespace SaveMail
 {
-    public class SaveMail
+    public class SaveMailModel
     {
+        public static MailItem[] GetSelectedEmails()
+        {
+            Selection selectedEmails = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
+            MailItem[] emailItems = new MailItem[selectedEmails.Count];
+
+            for (int i = 0; i < emailItems.Length; i++)
+            {
+                emailItems[i] = selectedEmails[i + 1];
+            }
+
+            return emailItems;
+        }
+
         public static Dictionary<object, object> GetPath(DialogResult dialogResult, String selectedPath)
         {
             return new Dictionary<object, object>() { { "dialogResult", dialogResult },
@@ -44,43 +57,22 @@ namespace SaveMail
             return emailSender;
         }
 
-        public static String SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
-        {
-            String emailSender;
-
-            foreach (MailItem email in emailItems)
-            {
-                String pathCheckResult = PathCheck(savePath, email);
-                if (email != null && pathCheckResult.Equals("charactersReplaced"))
-                {
-                    emailSender = GetEmailOrigin(email);
-                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
-                }
-                else
-                {
-                    return pathCheckResult;
-                }
-            }
-            return "success";
-        }
-
         public static String PathCheck(Dictionary<object, object> savePath, MailItem email)
         {
-            if (((String)savePath["selectedPath"]).Equals("C:\\"))
-            {
-                return "invalidPath";
-            }
-
             if ((DialogResult)savePath["dialogResult"] == DialogResult.OK 
                 && !string.IsNullOrWhiteSpace((String)savePath["selectedPath"]))
             {
+                if (((String)savePath["selectedPath"]).Equals("C:\\"))
+                {
+                    return "pathInvalid";
+                }
+
                 Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
                 email.Subject = replaceIllegalCharacters.Replace(email.Subject, "");
 
-                return "charactersReplaced";
+                return "pathOK";
             }
-
-            return "failed";
+            return "saveCancelled";
         }
     }
 }

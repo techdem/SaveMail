@@ -1,13 +1,13 @@
 ﻿namespace SaveMail
 {
-    partial class MailRibbon : Microsoft.Office.Tools.Ribbon.RibbonBase
+    partial class SaveMailController : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        public MailRibbon()
+        public SaveMailController()
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
@@ -58,18 +58,18 @@
             // SaveSelectedButton
             // 
             this.SaveSelectedButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.SaveSelectedButton.Image = global::SaveMail.Properties.Resources.OPW_Mark_Core_Colour_copy;
+            this.SaveSelectedButton.Image = global::SaveMail.Properties.Resources.logo;
             this.SaveSelectedButton.Label = "Save Selected";
             this.SaveSelectedButton.Name = "SaveSelectedButton";
             this.SaveSelectedButton.ShowImage = true;
             this.SaveSelectedButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SaveSelectedButton_Click);
             // 
-            // MailRibbon
+            // SaveMailController
             // 
-            this.Name = "MailRibbon";
+            this.Name = "SaveMailController";
             this.RibbonType = "Microsoft.Outlook.Explorer";
             this.Tabs.Add(this.tab1);
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.MailRibbon_Load);
+            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.SaveMailController_Load);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
             this.group1.ResumeLayout(false);
@@ -87,9 +87,9 @@
 
     partial class ThisRibbonCollection
     {
-        internal MailRibbon MainRibbon
+        internal SaveMailController SaveMailController
         {
-            get { return this.GetRibbon<MailRibbon>(); }
+            get { return this.GetRibbon<SaveMailController>(); }
         }
     }
 }

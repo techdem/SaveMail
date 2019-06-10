@@ -20,7 +20,7 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestGetPath()
         {
-            Dictionary<object, object> getPath = SaveMail.SaveMail.GetPath(DialogResult.OK, "C:\\");
+            Dictionary<object, object> getPath = SaveMail.SaveMailModel.GetPath(DialogResult.OK, "C:\\");
 
             Assert.AreEqual(getPath["dialogResult"], DialogResult.OK);
             Assert.IsTrue(getPath["selectedPath"].Equals("C:\\"));
@@ -32,7 +32,7 @@ namespace UnitTestsForSaveMail
             MailItem internalMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             internalMailItem.Sender = outlookAddress.AddressEntry;
 
-            Assert.AreEqual("test@internal.address", SaveMail.SaveMail.GetEmailOrigin(internalMailItem));
+            Assert.AreEqual("test@internal.address", SaveMail.SaveMailModel.GetEmailOrigin(internalMailItem));
         }
 
         [TestMethod]
@@ -43,8 +43,8 @@ namespace UnitTestsForSaveMail
             validMailItem.Subject = "valid email subject";
             MailItem[] selectedItems = new MailItem[] { validMailItem };
             
-            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(okResult, selectedItems).Equals("success"));
-            Assert.IsTrue(SaveMail.SaveMail.SaveSelected(negativeResult, selectedItems).Equals("failed"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
             File.Delete("C:\\TEST\\4501-01-01 test@internal.address valid email subject.msg");
         }
 
@@ -54,8 +54,8 @@ namespace UnitTestsForSaveMail
             MailItem invalidEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             invalidEmailSubject.Subject = "\\/:*?\"<>|";
 
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, invalidEmailSubject).Equals("charactersReplaced"));
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(negativeResult, invalidEmailSubject).Equals("failed"));
+            Assert.IsTrue(SaveMail.SaveMailModel.PathCheck(okResult, invalidEmailSubject).Equals("pathOK"));
+            Assert.IsTrue(SaveMail.SaveMailModel.PathCheck(negativeResult, invalidEmailSubject).Equals("saveCancelled"));
 
         }
 
@@ -66,7 +66,7 @@ namespace UnitTestsForSaveMail
             mailItem.Subject = "test";
             Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", "C:\\" } };
 
-            Assert.IsTrue(SaveMail.SaveMail.PathCheck(okResult, mailItem).Equals("invalidPath"));
+            Assert.IsTrue(SaveMail.SaveMailModel.PathCheck(okResult, mailItem).Equals("pathInvalid"));
         }
     }
 }

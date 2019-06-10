@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Microsoft.Office.Interop.Outlook;
+using Microsoft.Office.Tools.Ribbon;
+
+namespace SaveMail
+{
+    // Controller class representing the entry point for the plugin
+    public partial class SaveMailController
+    {
+        private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
+        {
+        }
+
+        // Main method with at event listener for the plugin button
+        private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            MailItem[] selectedEmails = SaveMailModel.GetSelectedEmails();
+
+            Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
+
+            SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails));
+        }
+
+        // Method that invokes a sanity check for the path and saves e-mails to drive
+        public static String SaveSelected(Dictionary<object, object> savePath, MailItem[] emailItems)
+        {
+            String emailSender;
+
+            foreach (MailItem email in emailItems)
+            {
+                String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
+
+                if (email != null && pathCheckResult.Equals("pathOK"))
+                {
+                    emailSender = SaveMailModel.GetEmailOrigin(email);
+                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                }
+                else
+                {
+                    return pathCheckResult;
+                }
+            }
+            return "saveSuccess";
+        }
+    }
+}

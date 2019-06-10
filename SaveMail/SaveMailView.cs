@@ -7,19 +7,19 @@ using System.Windows.Forms;
 
 namespace SaveMail
 {
-    public class SaveMailUI
+    public class SaveMailView
     {
-        public static Dictionary<object, object> ShowDialog()
+        public static Dictionary<object, object> ShowBrowserDialog()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Choose the destination folder for the selected emails." };
             DialogResult dialogResult = fbd.ShowDialog();
 
-            return SaveMail.GetPath(dialogResult, fbd.SelectedPath);
+            return SaveMailModel.GetPath(dialogResult, fbd.SelectedPath);
         }
 
         public static void Confirmation(String input)
         {
-            if (input.Equals("success"))
+            if (input.Equals("saveSuccess"))
             {
                 MessageBox.Show("Saved successfully!", "SaveMail");
             }
@@ -31,14 +31,14 @@ namespace SaveMail
 
         public static void Notify(String input)
         {
-            if (input.Equals("invalidPath"))
+            if (input.Equals("pathInvalid"))
             {
                 MessageBox.Show("Invalid path, please choose a different folder.", "SaveMail");
             }
 
-            if (input.Equals("failed"))
+            if (input.Equals("saveCancelled"))
             {
-                MessageBox.Show("Invalid path, please choose a different folder.", "SaveMail");
+                MessageBox.Show("Operation cancelled.", "SaveMail");
             }
         }
     }
