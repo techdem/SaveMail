@@ -9,6 +9,7 @@ namespace SaveMail
 {
     public class SaveMailView
     {
+        // Display the folder browser dialog
         public static Dictionary<object, object> ShowBrowserDialog()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Choose the destination folder for the selected emails." };
@@ -17,6 +18,7 @@ namespace SaveMail
             return SaveMailModel.GetPath(dialogResult, fbd.SelectedPath);
         }
 
+        // Display the confirmation message or invoke the notification method
         public static void Confirmation(String input)
         {
             if (input.Equals("saveSuccess"))
@@ -29,6 +31,7 @@ namespace SaveMail
             }
         }
 
+        // Notify the user if something has gone wrong
         public static void Notify(String input)
         {
             if (input.Equals("pathInvalid"))

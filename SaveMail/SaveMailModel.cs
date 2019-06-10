@@ -11,6 +11,7 @@ namespace SaveMail
 {
     public class SaveMailModel
     {
+        // Retrieve a list of selected emails
         public static List<object> GetSelectedEmails()
         {
             Selection selectedEmails = new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Selection;
@@ -24,12 +25,14 @@ namespace SaveMail
             return emailItems;
         }
 
+        // Parse the result from the folder browser dialog
         public static Dictionary<object, object> GetPath(DialogResult dialogResult, String selectedPath)
         {
             return new Dictionary<object, object>() { { "dialogResult", dialogResult },
                 { "selectedPath", selectedPath } };
         }
 
+        // Determine if the email is internal or external
         public static String GetEmailOrigin(MailItem email)
         {
             String emailSender = "";
@@ -57,6 +60,7 @@ namespace SaveMail
             return emailSender;
         }
 
+        // Check if the resulting path for the saved emails is valid
         public static String PathCheck(Dictionary<object, object> savePath, MailItem email)
         {
             if ((DialogResult)savePath["dialogResult"] == DialogResult.OK 
