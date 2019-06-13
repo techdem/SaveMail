@@ -1,7 +1,4 @@
 ﻿using Microsoft.Office.Interop.Outlook;
-using Moq;
-using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
@@ -10,7 +7,7 @@ using System.Collections.Generic;
 namespace UnitTestsForSaveMail
 {
     [TestClass]
-    public class TestSaveMail
+    public class TestSaveMailModel
     {
         static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
         Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
@@ -33,19 +30,6 @@ namespace UnitTestsForSaveMail
             internalMailItem.Sender = outlookAddress.AddressEntry;
 
             Assert.AreEqual("test@internal.address", SaveMail.SaveMailModel.GetEmailOrigin(internalMailItem));
-        }
-
-        [TestMethod]
-        public void TestSaveSelected()
-        {
-            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
-            validMailItem.Sender = outlookAddress.AddressEntry;
-            validMailItem.Subject = "valid email subject";
-            List<object> selectedItems = new List<object> { validMailItem };
-            
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
-            File.Delete("C:\\TEST\\4501-01-01 test@internal.address valid email subject.msg");
         }
 
         [TestMethod]
