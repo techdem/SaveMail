@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SaveMail
 {
-    public class SaveMailModel
+    public static class SaveMailModel
     {
         // Retrieve a list of selected emails
         public static List<object> GetSelectedEmails()
