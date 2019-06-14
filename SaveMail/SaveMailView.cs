@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SaveMail
 {
-    public class SaveMailView
+    public static class SaveMailView
     {
         // Display the folder browser dialog
         public static Dictionary<object, object> ShowBrowserDialog()

@@ -232,6 +232,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SaveMailLogging.cs" />
     <Compile Include="SaveMailModel.cs" />
     <Compile Include="SaveMailView.cs" />
     <Compile Include="ThisAddIn.cs">

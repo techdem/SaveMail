@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="TestSaveMailController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSaveMailLogger.cs" />
     <Compile Include="TestSaveMailModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,30 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="SaveMail.MailRibbon">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+  <Class Name="SaveMail.SaveMailController">
+    <Position X="4" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAQAAQAACAAAAAAAACAAAACAAAAAAAAgAAAAAAAEAA=</HashCode>
-      <FileName>MailRibbon.cs</FileName>
+      <HashCode>QAAQAAQAACAAAAAAAACAQAACAAAAAABAAAAAAAAAEAA=</HashCode>
+      <FileName>SaveMailController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SaveMail.ThisRibbonCollection" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SaveMail.SaveMail">
-    <Position X="4" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAQAAAAAACAAAAAAAAAAAAEAA=</HashCode>
-      <FileName>SaveMail.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SaveMail.SaveMailUI">
-    <Position X="2.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAABAIAAAAAAAAAA=</HashCode>
-      <FileName>SaveMailUI.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="SaveMail.ThisAddIn" Collapsed="true">
@@ -55,13 +41,27 @@
   <Class Name="SaveMail.Properties.Resources" Collapsed="true">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAACAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="SaveMail.Properties.Settings" Collapsed="true">
     <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveMail.SaveMailModel">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAEAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>SaveMailModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveMail.SaveMailView">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAABAIAAAAAAAAAA=</HashCode>
+      <FileName>SaveMailView.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
