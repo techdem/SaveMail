@@ -35,7 +35,7 @@ namespace SaveMail
 
             using (sw = File.AppendText(logFilePath))
             {
-                sw.WriteLine(logMessage);
+                sw.WriteLine(DateTime.Now + " :\t" + logMessage);
             }
         }
     }
