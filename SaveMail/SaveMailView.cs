@@ -28,7 +28,9 @@ namespace SaveMail
             else
             {
                 Notify(input);
+                
             }
+            SaveMailLogger.LogAction("Action result: " + input);
         }
 
         // Notify the user if something has gone wrong

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SaveMail
 {
-    public class SaveMailLogging
+    public class SaveMailLogger
     {
         readonly string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        string logFilePath;
-        StreamWriter sw;
+        static string logFilePath;
+        static StreamWriter sw;
 
-        public SaveMailLogging(string applicationName)
+        public SaveMailLogger(string applicationName)
         {
-            this.logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
+            logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
         }
 
-        public void CreateLogFile()
+        public static void CreateLogFile()
         {
             if (!File.Exists(logFilePath))
             {
@@ -29,7 +29,7 @@ namespace SaveMail
             }
         }
 
-        public void LogAction(string logMessage)
+        public static void LogAction(string logMessage)
         {
             CreateLogFile();
 

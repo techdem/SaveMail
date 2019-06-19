@@ -5,15 +5,15 @@ using System.IO;
 namespace UnitTestsForSaveMail
 {
     [TestClass]
-    public class TestSaveMailLogger
+    public class TestSaveMailLogging
     {
         readonly string logFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\SaveMail\\Log-" + Environment.MachineName + ".txt";
-        SaveMail.SaveMailLogging sml = new SaveMail.SaveMailLogging("SaveMail");
 
         [TestMethod]
         public void TestCreateLogFile()
         {
-            sml.CreateLogFile();
+            new SaveMail.SaveMailLogger("SaveMail");
+            SaveMail.SaveMailLogger.CreateLogFile();
 
             Assert.IsTrue(File.Exists(logFile));
         }
@@ -21,15 +21,16 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestLogAction()
         {
+            new SaveMail.SaveMailLogger("SaveMail");
             string logFileContent;
-            sml.LogAction("IT'S FRIDAY !!!");
+            SaveMail.SaveMailLogger.LogAction("TestLogAction");
 
             using (StreamReader sr = new StreamReader(logFile))
             {
                 logFileContent = sr.ReadToEnd();
             }
 
-            Assert.IsTrue(logFileContent.Contains("IT'S FRIDAY !!!"));
+            Assert.IsTrue(logFileContent.Contains("TestLogAction"));
         }
     }
 }

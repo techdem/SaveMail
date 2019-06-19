@@ -3,7 +3,7 @@
   <Class Name="SaveMail.SaveMailController">
     <Position X="4" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAQAAQAACAAAAAAAACAQAACAAAAAABAAAAAAAAAEAA=</HashCode>
+      <HashCode>QAAQAAQAACAEAAAAAACAQAACAAAAAABAAAAAAAAAEAA=</HashCode>
       <FileName>SaveMailController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -62,6 +62,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAABAIAAAAAAAAAA=</HashCode>
       <FileName>SaveMailView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveMail.SaveMailLogger">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAIAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAIAAAA=</HashCode>
+      <FileName>SaveMailLogger.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -12,18 +12,18 @@ namespace SaveMail
     // Controller class representing the entry point for the plugin
     public partial class SaveMailController
     {
-        SaveMailLogging sml = new SaveMailLogging("SaveMail");
         private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
         {
-            sml.LogAction("Plugin Loaded!");
+            new SaveMailLogger("SaveMail");
+            SaveMailLogger.LogAction("Plugin Loaded!");
         }
 
         // Main method with at event listener for the plugin button
         private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
         {
-            sml.LogAction("Plugin Activated!");
+            SaveMailLogger.LogAction("Plugin Activated!");
             List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
-            sml.LogAction("Selected " + selectedEmails.Count + " emails.");
+            SaveMailLogger.LogAction("Selected " + selectedEmails.Count + " emails.");
 
             if (selectedEmails.Count != 0)
             {
@@ -33,20 +33,18 @@ namespace SaveMail
             }
             else
             {
-                SaveMailView.Notify("invalidSelection");
-                sml.LogAction("Selection contains invalid item...");
+                SaveMailView.Confirmation("invalidSelection");
             }
         }
 
         // Method that invokes a sanity check for the path and saves e-mails to drive
-        public String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
+        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
         {
             String emailSender;
 
             foreach (MailItem email in emailItems)
             {
                 String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
-                sml.LogAction("Path check result: " + pathCheckResult);
 
                 if (pathCheckResult.Equals("pathOK"))
                 {
