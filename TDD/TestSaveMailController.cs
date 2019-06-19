@@ -10,9 +10,10 @@ namespace UnitTestsForSaveMail
     [TestClass]
     public class TestSaveMailController
     {
+        readonly static string applicationName = "SaveMail";
         static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
         Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
-        static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\SaveMail";
+        readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\" + applicationName;
         readonly Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", savePath } };
         readonly Dictionary<object, object> negativeResult = new Dictionary<object, object> { { "dialogResult", DialogResult.Cancel }, { "selectedPath", " " } };
 

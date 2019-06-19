@@ -7,12 +7,13 @@ namespace UnitTestsForSaveMail
     [TestClass]
     public class TestSaveMailLogging
     {
-        readonly string logFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\SaveMail\\Log-" + Environment.MachineName + ".txt";
+        readonly static string applicationName = "SaveMail";
+        readonly string logFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
 
         [TestMethod]
         public void TestCreateLogFile()
         {
-            new SaveMail.SaveMailLogger("SaveMail");
+            new SaveMail.SaveMailLogger(applicationName);
             SaveMail.SaveMailLogger.CreateLogFile();
 
             Assert.IsTrue(File.Exists(logFile));
@@ -21,7 +22,7 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestLogAction()
         {
-            new SaveMail.SaveMailLogger("SaveMail");
+            new SaveMail.SaveMailLogger(applicationName);
             string logFileContent;
             SaveMail.SaveMailLogger.LogAction("TestLogAction");
 

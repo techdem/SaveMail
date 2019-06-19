@@ -16,6 +16,7 @@ namespace SaveMail
         public SaveMailLogger(string applicationName)
         {
             logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
+            Directory.CreateDirectory(userProfilePath + "\\AppData\\Local\\" + applicationName);
         }
 
         public static void CreateLogFile()
