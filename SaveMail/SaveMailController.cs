@@ -46,10 +46,10 @@ namespace SaveMail
             {
                 String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
 
-                if (pathCheckResult.Equals("pathOK"))
+                if (!pathCheckResult.Equals("pathOK") && !pathCheckResult.Equals("saveCancelled"))
                 {
                     emailSender = SaveMailModel.GetEmailOrigin(email);
-                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + email.Subject + ".msg", OlSaveAsType.olMSG);
+                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                 }
                 else
                 {
