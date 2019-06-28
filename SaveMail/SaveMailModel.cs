@@ -76,7 +76,7 @@ namespace SaveMail
 
                 Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
 
-                return replaceIllegalCharacters.Replace(email.Subject, "");
+                return email.Subject != null ? replaceIllegalCharacters.Replace(email.Subject, "") : "No Subject";
             }
             return "saveCancelled";
         }

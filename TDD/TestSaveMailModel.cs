@@ -37,8 +37,11 @@ namespace UnitTestsForSaveMail
         {
             MailItem invalidEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             invalidEmailSubject.Subject = "\\/:*?\"<>|";
+            MailItem emptyEmailSubject = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            emptyEmailSubject.Subject = "";
 
             Assert.IsTrue(!SaveMail.SaveMailModel.PathCheck(okResult, invalidEmailSubject).Equals("pathInvalid") && !SaveMail.SaveMailModel.PathCheck(okResult, invalidEmailSubject).Equals("saveCancelled"));
+            Assert.IsTrue(!SaveMail.SaveMailModel.PathCheck(okResult, emptyEmailSubject).Equals("pathInvalid") && !SaveMail.SaveMailModel.PathCheck(okResult, emptyEmailSubject).Equals("saveCancelled"));
             Assert.IsTrue(SaveMail.SaveMailModel.PathCheck(negativeResult, invalidEmailSubject).Equals("saveCancelled"));
 
         }
