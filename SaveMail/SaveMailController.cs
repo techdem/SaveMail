@@ -41,6 +41,7 @@ namespace SaveMail
         public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
         {
             String emailSender;
+            int savedNumber = 0;
 
             foreach (MailItem email in emailItems)
             {
@@ -50,12 +51,15 @@ namespace SaveMail
                 {
                     emailSender = SaveMailModel.GetEmailOrigin(email);
                     email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                    savedNumber++;
                 }
                 else
                 {
                     return pathCheckResult;
                 }
             }
+            SaveMailLogger.LogAction("Saved to location: " + savePath["selectedPath"]);
+            SaveMailLogger.LogAction("Total saved: " + savedNumber);
             return "saveSuccess";
         }
     }
