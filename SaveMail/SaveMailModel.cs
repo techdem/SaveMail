@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,6 +12,9 @@ namespace SaveMail
 {
     public static class SaveMailModel
     {
+        readonly static string applicationName = "SaveMail";
+        readonly static string logFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
+
         // Retrieve a list of selected emails
         public static List<object> GetSelectedEmails()
         {
@@ -33,6 +37,29 @@ namespace SaveMail
         {
             return new Dictionary<object, object>() { { "dialogResult", dialogResult },
                 { "selectedPath", selectedPath } };
+        }
+
+        // Parse the user config file and determine the most recently used save location
+
+        public static String GetRecentLocation()
+        {
+            String lastUsedLocation = "";
+
+            using (StreamReader sr = new StreamReader(logFile))
+            {
+                String configFile = sr.ReadToEnd();
+
+                int lastLocation = configFile.LastIndexOf("Saved to location:") + 19;
+                int lastConfirmation = configFile.LastIndexOf("Total saved:") - 24;
+                int pathLength = lastConfirmation - lastLocation;
+
+                if (pathLength > 0)
+                {
+                    lastUsedLocation = configFile.Substring(lastLocation, pathLength);
+                }
+            }
+
+            return lastUsedLocation;
         }
 
         // Determine if the email is internal or external

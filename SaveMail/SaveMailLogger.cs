@@ -9,8 +9,9 @@ namespace SaveMail
 {
     public class SaveMailLogger
     {
-        readonly string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        static string logFilePath;
+        readonly static string applicationName = "SaveMail";
+        readonly static string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        static string logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
         static StreamWriter sw;
 
         public SaveMailLogger(string applicationName)

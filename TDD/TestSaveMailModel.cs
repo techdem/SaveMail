@@ -9,6 +9,7 @@ namespace UnitTestsForSaveMail
     [TestClass]
     public class TestSaveMailModel
     {
+        readonly static string applicationName = "SaveMail";
         static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
         Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
         readonly Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", "C:\\TEST" } };
@@ -21,6 +22,16 @@ namespace UnitTestsForSaveMail
 
             Assert.AreEqual(getPath["dialogResult"], DialogResult.OK);
             Assert.IsTrue(getPath["selectedPath"].Equals("C:\\"));
+        }
+
+        [TestMethod]
+        public void GetRecentLocation()
+        {
+            new SaveMail.SaveMailLogger(applicationName);
+            SaveMail.SaveMailLogger.LogAction("Saved to location: testSaveLocation");
+            SaveMail.SaveMailLogger.LogAction("Total saved: ...");
+
+            Assert.IsTrue(SaveMail.SaveMailModel.GetRecentLocation().Equals("testSaveLocation"));
         }
 
         [TestMethod]
