@@ -9,19 +9,28 @@ namespace SaveMail
 {
     public class SaveMailLogger
     {
+        // Set application name
         readonly static string applicationName = "SaveMail";
+
+        // Set the location for the application folder and log file
         readonly static string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        static string logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
+        static string applicationFolderPath = userProfilePath + "\\AppData\\Local\\" + applicationName;
+        static string logFilePath = applicationFolderPath + "\\Log-" + Environment.MachineName + ".txt";
+
         static StreamWriter sw;
 
-        public SaveMailLogger(string applicationName)
+        // Create new application folder
+        public static void CreateApplicationFolder()
         {
             logFilePath = userProfilePath + "\\AppData\\Local\\" + applicationName + "\\Log-" + Environment.MachineName + ".txt";
-            Directory.CreateDirectory(userProfilePath + "\\AppData\\Local\\" + applicationName);
+            Directory.CreateDirectory(applicationFolderPath);
         }
 
+        // Create new log file if it doesn't already exist
         public static void CreateLogFile()
         {
+            CreateApplicationFolder();
+
             if (!File.Exists(logFilePath))
             {
                 using (sw = File.CreateText(logFilePath))
@@ -31,6 +40,7 @@ namespace SaveMail
             }
         }
 
+        // Log new action with timestamp
         public static void LogAction(string logMessage)
         {
             CreateLogFile();

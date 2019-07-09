@@ -14,7 +14,6 @@ namespace SaveMail
     {
         private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
         {
-            new SaveMailLogger("SaveMail");
             SaveMailLogger.LogAction("Plugin Loaded!");
         }
 
@@ -47,7 +46,7 @@ namespace SaveMail
             {
                 String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
 
-                if (!pathCheckResult.Equals("pathOK") && !pathCheckResult.Equals("saveCancelled"))
+                if (!pathCheckResult.Equals("pathInvalid") && !pathCheckResult.Equals("saveCancelled"))
                 {
                     emailSender = SaveMailModel.GetEmailOrigin(email);
                     email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
