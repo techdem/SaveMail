@@ -27,7 +27,7 @@ namespace UnitTestsForSaveMail
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 test@internal.address valid email subject.msg"));
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid email subject.msg"));
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
             File.Delete(savePath + "\\4501-01-01 test@internal.address valid email subject.msg");
         }

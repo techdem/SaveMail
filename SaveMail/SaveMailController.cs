@@ -49,7 +49,7 @@ namespace SaveMail
                 if (!pathCheckResult.Equals("pathInvalid") && !pathCheckResult.Equals("saveCancelled"))
                 {
                     emailSender = SaveMailModel.GetEmailOrigin(email);
-                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     savedNumber++;
                 }
                 else
