@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using Microsoft.Office.Interop.Outlook;
 using Microsoft.Office.Tools.Ribbon;
 
@@ -39,7 +35,6 @@ namespace SaveMail
         // Method that invokes a sanity check for the path and saves e-mails to drive
         public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
         {
-            String emailSender;
             int savedNumber = 0;
 
             foreach (MailItem email in emailItems)
@@ -48,8 +43,16 @@ namespace SaveMail
 
                 if (!pathCheckResult.Equals("pathInvalid") && !pathCheckResult.Equals("saveCancelled"))
                 {
-                    emailSender = SaveMailModel.GetEmailOrigin(email);
-                    email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                    if(email.ReceivedByName == null)
+                    {
+                        String emailDestination = SaveMailModel.GetEmailAddress(email, "outgoing");
+                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailDestination + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                    }
+                    else
+                    {
+                        String emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
+                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                    }
                     savedNumber++;
                 }
                 else

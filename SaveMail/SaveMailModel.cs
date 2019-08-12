@@ -63,31 +63,59 @@ namespace SaveMail
         }
 
         // Determine if the email is internal or external
-        public static String GetEmailOrigin(MailItem email)
+        public static String GetEmailAddress(MailItem email, String direction)
         {
-            String emailSender = "";
+            String address = "";
 
             if (email.SenderEmailType == "EX")
             {
-                AddressEntry address = email.Sender;
+                AddressEntry addressEntry = direction.Equals("outgoing") ? email.Recipients[1].AddressEntry : email.Sender;
 
-                if (address.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry
-                    || address.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
+                if (addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry
+                    || addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
                 {
-                    ExchangeUser internalAddress = address.GetExchangeUser();
+                    ExchangeUser internalAddress = addressEntry.GetExchangeUser();
 
                     if (internalAddress != null)
                     {
-                        emailSender = internalAddress.PrimarySmtpAddress;
+                        address = internalAddress.PrimarySmtpAddress;
                     }
                 }
             }
             else
             {
-                emailSender = email.Sender.Address;
+                address = email.Sender.Address;
             }
 
-            return emailSender;
+            return address;
+        }
+
+        // Determine if the email is internal or external
+        public static String GetEmailDestination(MailItem email)
+        {
+            String address = "";
+
+            if (email.SenderEmailType == "EX")
+            {
+                AddressEntry addressEntry = email.Recipients[1].AddressEntry;
+
+                if (addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry
+                    || addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
+                {
+                    ExchangeUser internalAddress = addressEntry.GetExchangeUser();
+
+                    if (internalAddress != null)
+                    {
+                        address = internalAddress.PrimarySmtpAddress;
+                    }
+                }
+            }
+            else
+            {
+                address = email.Sender.Address;
+            }
+
+            return address;
         }
 
         // Check if the resulting path for the saved emails is valid

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Office.Interop.Outlook;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 using System.Collections.Generic;
 
 namespace UnitTestsForSaveMail
@@ -33,12 +32,12 @@ namespace UnitTestsForSaveMail
         }
 
         [TestMethod]
-        public void TestGetEmailOrigin()
+        public void TestGetEmailAddress()
         {
-            MailItem internalMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
-            internalMailItem.Sender = outlookAddress.AddressEntry;
+            MailItem incominglMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            incominglMailItem.Sender = outlookAddress.AddressEntry;
 
-            Assert.AreEqual("test@internal.address", SaveMail.SaveMailModel.GetEmailOrigin(internalMailItem));
+            Assert.AreEqual("test@internal.address", SaveMail.SaveMailModel.GetEmailAddress(incominglMailItem, "incoming"));
         }
 
         [TestMethod]
