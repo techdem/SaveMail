@@ -29,6 +29,7 @@ namespace SaveMail
                 Notify(input);
                 
             }
+
             SaveMailLogger.LogAction("Action result: " + input);
         }
 

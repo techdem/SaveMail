@@ -29,6 +29,7 @@ namespace SaveMail
                 }
                 emailItems.Add(item);
             }
+
             return emailItems;
         }
 
@@ -81,6 +82,10 @@ namespace SaveMail
                         address = internalAddress.PrimarySmtpAddress;
                     }
                 }
+                else
+                {
+                    address = email.Recipients[1].Address;
+                }
             }
             else
             {
@@ -90,7 +95,7 @@ namespace SaveMail
             return address;
         }
 
-        // Determine if the email is internal or external
+        // Determine if the email is incoming or outgoing
         public static String GetEmailDestination(MailItem email)
         {
             String address = "";
@@ -135,6 +140,7 @@ namespace SaveMail
 
                 return email.Subject.Length > 15 ? email.Subject.Substring(0, 15) + "(...)" : email.Subject;
             }
+
             return "saveCancelled";
         }
     }

@@ -27,9 +27,9 @@ namespace UnitTestsForSaveMail
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid subject.msg"));
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg"));
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
-            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address valid subject.msg");
+            File.Delete(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg");
         }
 
         [TestMethod]
@@ -42,8 +42,8 @@ namespace UnitTestsForSaveMail
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid subject o(...).msg"));
-            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address valid subject o(...).msg");
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address valid subject o(...).msg"));
+            File.Delete(savePath + "\\4501-01-01 0000 test@internal.address valid subject o(...).msg");
         }
 
         [TestMethod]
@@ -55,8 +55,8 @@ namespace UnitTestsForSaveMail
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address No Subject.msg"));
-            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address No Subject.msg");
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address No Subject.msg"));
+            File.Delete(savePath + "\\4501-01-01 0000 test@internal.address No Subject.msg");
         }
     }
 }

@@ -46,12 +46,12 @@ namespace SaveMail
                     if(email.ReceivedByName == null)
                     {
                         String emailDestination = SaveMailModel.GetEmailAddress(email, "outgoing");
-                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailDestination + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailDestination + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
                     else
                     {
                         String emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
-                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HH-mm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
+                        email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
                     savedNumber++;
                 }
@@ -60,6 +60,7 @@ namespace SaveMail
                     return pathCheckResult;
                 }
             }
+
             SaveMailLogger.LogAction("Saved to location: " + savePath["selectedPath"]);
             SaveMailLogger.LogAction("Total saved: " + savedNumber);
             return "saveSuccess";
