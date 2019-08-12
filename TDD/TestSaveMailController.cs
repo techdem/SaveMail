@@ -22,14 +22,41 @@ namespace UnitTestsForSaveMail
         {
             MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
-            validMailItem.Subject = "valid email subject";
+            validMailItem.Subject = "valid subject";
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
-            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid email subject.msg"));
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid subject.msg"));
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems).Equals("saveCancelled"));
-            File.Delete(savePath + "\\4501-01-01 test@internal.address valid email subject.msg");
+            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address valid subject.msg");
+        }
+
+        [TestMethod]
+        public void TestSaveSelectedLongSubject()
+        {
+            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            validMailItem.Sender = outlookAddress.AddressEntry;
+            validMailItem.Subject = "valid subject over 15 characters";
+            List<object> selectedItems = new List<object> { validMailItem };
+            Directory.CreateDirectory(savePath);
+
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address valid subject o(...).msg"));
+            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address valid subject o(...).msg");
+        }
+
+        [TestMethod]
+        public void TestSaveSelectedNoSubject()
+        {
+            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            validMailItem.Sender = outlookAddress.AddressEntry;
+            List<object> selectedItems = new List<object> { validMailItem };
+            Directory.CreateDirectory(savePath);
+
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems).Equals("saveSuccess"));
+            Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 00-00 test@internal.address No Subject.msg"));
+            File.Delete(savePath + "\\4501-01-01 00-00 test@internal.address No Subject.msg");
         }
     }
 }
