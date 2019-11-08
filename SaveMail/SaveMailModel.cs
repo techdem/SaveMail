@@ -95,34 +95,6 @@ namespace SaveMail
             return address;
         }
 
-        // Determine if the email is incoming or outgoing
-        public static String GetEmailDestination(MailItem email)
-        {
-            String address = "";
-
-            if (email.SenderEmailType == "EX")
-            {
-                AddressEntry addressEntry = email.Recipients[1].AddressEntry;
-
-                if (addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry
-                    || addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeRemoteUserAddressEntry)
-                {
-                    ExchangeUser internalAddress = addressEntry.GetExchangeUser();
-
-                    if (internalAddress != null)
-                    {
-                        address = internalAddress.PrimarySmtpAddress;
-                    }
-                }
-            }
-            else
-            {
-                address = email.Sender.Address;
-            }
-
-            return address;
-        }
-
         // Check if the resulting path for the saved emails is valid
         public static String PathCheck(Dictionary<object, object> savePath, MailItem email)
         {
