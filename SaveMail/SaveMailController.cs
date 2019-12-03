@@ -8,6 +8,9 @@ namespace SaveMail
     // Controller class representing the entry point for the plugin
     public partial class SaveMailController
     {
+        static Folder inbox = null;
+        static String inboxFolderName = "SavedMail";
+
         private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
         {
             SaveMailLogger.LogAction("Plugin Loaded!");
@@ -17,6 +20,9 @@ namespace SaveMail
         private void SaveSelectedButton_Click(object sender, RibbonControlEventArgs e)
         {
             SaveMailLogger.LogAction("Plugin Activated!");
+
+            CreateSavedMailFolder();
+
             List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
             SaveMailLogger.LogAction("Selected " + selectedEmails.Count + " emails.");
 
@@ -24,7 +30,6 @@ namespace SaveMail
             {
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
                 SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails));
-                
             }
             else
             {
@@ -32,7 +37,24 @@ namespace SaveMail
             }
         }
 
-        // Method that invokes a sanity check for the path and saves e-mails to drive
+        // Create a folder in user inbox
+        private void CreateSavedMailFolder()
+        {
+            inbox = (Folder)
+                new Application().ActiveExplorer().Session.GetDefaultFolder
+                (OlDefaultFolders.olFolderInbox);
+
+            try {
+                Folder checkFolder = (Folder)inbox.Folders[inboxFolderName];
+            }
+            catch(System.Runtime.InteropServices.COMException ex)
+            {
+                inbox.Folders.Add(inboxFolderName, OlDefaultFolders.olFolderInbox);
+                SaveMailLogger.LogAction("Inbox Folder Created!");
+            }
+        }
+
+        // Invoke a sanity check for the path and save e-mails to drive
         public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
         {
             int savedNumber = 0;
@@ -43,7 +65,7 @@ namespace SaveMail
 
                 if (!pathCheckResult.Equals("pathInvalid") && !pathCheckResult.Equals("saveCancelled"))
                 {
-                    if(email.ReceivedByName == null)
+                    if (email.ReceivedByName == null)
                     {
                         String emailDestination = SaveMailModel.GetEmailAddress(email, "outgoing");
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailDestination + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
@@ -53,6 +75,7 @@ namespace SaveMail
                         String emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
+                    email.Move(inbox.Folders[inboxFolderName]);
                     savedNumber++;
                 }
                 else
