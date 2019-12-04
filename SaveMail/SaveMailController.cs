@@ -8,7 +8,6 @@ namespace SaveMail
     // Controller class representing the entry point for the plugin
     public partial class SaveMailController
     {
-        static Folder inbox = null;
         static String inboxFolderName = "SavedMail";
 
         private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
@@ -21,15 +20,19 @@ namespace SaveMail
         {
             SaveMailLogger.LogAction("Plugin Activated!");
 
-            CreateSavedMailFolder();
-
             List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
             SaveMailLogger.LogAction("Selected " + selectedEmails.Count + " emails.");
+
+            Folder inbox = (Folder)
+                new Application().ActiveExplorer().Session.GetDefaultFolder
+                (OlDefaultFolders.olFolderInbox);
+
+            CreateSavedMailFolder(inbox, inboxFolderName);
 
             if (selectedEmails.Count != 0)
             {
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
-                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails));
+                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox));
             }
             else
             {
@@ -38,24 +41,22 @@ namespace SaveMail
         }
 
         // Create a folder in user inbox
-        private void CreateSavedMailFolder()
+        public static String CreateSavedMailFolder(Folder inbox, String inboxFolderName)
         {
-            inbox = (Folder)
-                new Application().ActiveExplorer().Session.GetDefaultFolder
-                (OlDefaultFolders.olFolderInbox);
-
             try {
                 Folder checkFolder = (Folder)inbox.Folders[inboxFolderName];
+                return "inboxFolderExists";
             }
             catch(System.Runtime.InteropServices.COMException ex)
             {
                 inbox.Folders.Add(inboxFolderName, OlDefaultFolders.olFolderInbox);
                 SaveMailLogger.LogAction("Inbox Folder Created!");
+                return "inboxFolderCreated";
             }
         }
 
         // Invoke a sanity check for the path and save e-mails to drive
-        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems)
+        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox)
         {
             int savedNumber = 0;
 
