@@ -8,8 +8,6 @@ namespace SaveMail
     // Controller class representing the entry point for the plugin
     public partial class SaveMailController
     {
-        static String inboxFolderName = "SavedMail";
-
         private void SaveMailController_Load(object sender, RibbonUIEventArgs e)
         {
             SaveMailLogger.LogAction("Plugin Loaded!");
@@ -27,12 +25,14 @@ namespace SaveMail
                 new Application().ActiveExplorer().Session.GetDefaultFolder
                 (OlDefaultFolders.olFolderInbox);
 
+            String inboxFolderName = "SavedMail";
+
             CreateSavedMailFolder(inbox, inboxFolderName);
 
             if (selectedEmails.Count != 0)
             {
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
-                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox));
+                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox, inboxFolderName));
             }
             else
             {
@@ -56,7 +56,7 @@ namespace SaveMail
         }
 
         // Invoke a sanity check for the path and save e-mails to drive
-        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox)
+        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox, String inboxFolderName)
         {
             int savedNumber = 0;
 
