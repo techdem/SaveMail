@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SaveMail
@@ -50,8 +47,8 @@ namespace SaveMail
             {
                 String configFile = sr.ReadToEnd();
 
-                int lastLocation = configFile.LastIndexOf("Saved to location:") + 19;
-                int lastConfirmation = configFile.LastIndexOf("Total saved:") - 24;
+                int lastLocation = configFile.LastIndexOf("Saved to location:") + 19; // string start
+                int lastConfirmation = configFile.LastIndexOf("Total saved:") - 24; // string end
                 int pathLength = lastConfirmation - lastLocation;
 
                 if (pathLength > 0)
