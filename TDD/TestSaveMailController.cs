@@ -33,13 +33,16 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestSaveSelected()
         {
-            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            MailItem validMailItem = (MailItem) outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
             validMailItem.Subject = "valid subject";
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
 
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName).Equals("saveSuccess"));
+            MailItem movedItem = (MailItem) inbox.Folders[inboxFolderName].Items[1];
+            Assert.IsTrue(movedItem.Sender.Address.Equals(validMailItem.Sender.Address));
+
             Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg"));
             Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems, inbox, inboxFolderName).Equals("saveCancelled"));
             File.Delete(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg");
@@ -48,7 +51,7 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestSaveSelectedLongSubject()
         {
-            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            MailItem validMailItem = (MailItem) outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
             validMailItem.Subject = "valid subject over 15 characters";
             List<object> selectedItems = new List<object> { validMailItem };
@@ -62,7 +65,7 @@ namespace UnitTestsForSaveMail
         [TestMethod]
         public void TestSaveSelectedNoSubject()
         {
-            MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            MailItem validMailItem = (MailItem) outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
