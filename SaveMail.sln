@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveMail", "SaveMail\SaveMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsForSaveMail", "TDD\UnitTestsForSaveMail.csproj", "{8B46E832-DCF5-4C72-B24A-596426DC7361}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupPackage", "SetupPackage\SetupPackage.vdproj", "{0646D328-4920-440D-BE6B-E8363CAD5EB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,9 +20,10 @@ Global
 		{58842754-91F0-4075-A203-51BE81882D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58842754-91F0-4075-A203-51BE81882D80}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B46E832-DCF5-4C72-B24A-596426DC7361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B46E832-DCF5-4C72-B24A-596426DC7361}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B46E832-DCF5-4C72-B24A-596426DC7361}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B46E832-DCF5-4C72-B24A-596426DC7361}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0646D328-4920-440D-BE6B-E8363CAD5EB9}.Debug|Any CPU.ActiveCfg = Debug
+		{0646D328-4920-440D-BE6B-E8363CAD5EB9}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
