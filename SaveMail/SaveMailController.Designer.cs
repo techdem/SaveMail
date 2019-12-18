@@ -34,6 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SaveMailController));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.SaveSelectedButton = this.Factory.CreateRibbonButton();
@@ -58,7 +59,7 @@
             // SaveSelectedButton
             // 
             this.SaveSelectedButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.SaveSelectedButton.Image = global::SaveMail.Properties.Resources.logo;
+            this.SaveSelectedButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveSelectedButton.Image")));
             this.SaveSelectedButton.Label = "Save Selected";
             this.SaveSelectedButton.Name = "SaveSelectedButton";
             this.SaveSelectedButton.ShowImage = true;
