@@ -25,7 +25,7 @@ namespace SaveMail
                 new Application().ActiveExplorer().Session.GetDefaultFolder
                 (OlDefaultFolders.olFolderInbox);
 
-            String inboxFolderName = "SavedMail";
+            String inboxFolderName = "Saved Mail";
 
             CreateSavedMailFolder(inbox, inboxFolderName);
 
@@ -47,7 +47,7 @@ namespace SaveMail
                 Folder checkFolder = (Folder)inbox.Folders[inboxFolderName];
                 return "inboxFolderExists";
             }
-            catch(System.Runtime.InteropServices.COMException ex)
+            catch(System.Runtime.InteropServices.COMException)
             {
                 inbox.Folders.Add(inboxFolderName, OlDefaultFolders.olFolderInbox);
                 SaveMailLogger.LogAction("Inbox Folder Created!");
@@ -76,7 +76,12 @@ namespace SaveMail
                         String emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
-                    email.Move(inbox.Folders[inboxFolderName]);
+
+                    if (email.Parent.FolderPath.ToString() == inboxFolderName)
+                    {
+                        email.Move(inbox.Folders[inboxFolderName]);
+                    }
+
                     savedNumber++;
                 }
                 else
