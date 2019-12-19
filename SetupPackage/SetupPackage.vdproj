@@ -1617,7 +1617,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\..\\..\\..\\Desktop\\SetupPackage.msi"
+        "OutputFilename" = "8:..\\..\\..\\..\\Desktop\\SetupSaveMailPlugin.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -1671,6 +1671,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -5846,7 +5854,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Save Mail"
         "ProductCode" = "8:{82B74448-CC08-4556-B25E-D49DAE85F918}"
-        "PackageCode" = "8:{0F39926D-AC76-4BA7-AFF0-C8DB8989EEE6}"
+        "PackageCode" = "8:{B4E2502C-14B6-44FD-BDAF-3F1DD594C93A}"
         "UpgradeCode" = "8:{29E3268F-CDDE-487D-B81F-31E531A9CA7A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
