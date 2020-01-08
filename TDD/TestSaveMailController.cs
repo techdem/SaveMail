@@ -11,7 +11,7 @@ namespace UnitTestsForSaveMail
     public class TestSaveMailController
     {
         readonly static string applicationName = "SaveMail";
-        readonly static String inboxFolderName = "SavedMailTest";
+        readonly static String inboxFolderName = "TestSaveMail";
         readonly static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
 
         Folder inbox = (Folder) outlookApplication.Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
@@ -23,15 +23,6 @@ namespace UnitTestsForSaveMail
 
         [TestMethod]
         public void TestCreateSavedMailFolder()
-        {
-            DeleteTestInboxFolder();
-
-            Assert.IsTrue(SaveMail.SaveMailController.CreateSavedMailFolder(inbox, inboxFolderName).Equals("inboxFolderCreated"));
-            Assert.IsTrue(SaveMail.SaveMailController.CreateSavedMailFolder(inbox, inboxFolderName).Equals("inboxFolderExists"));
-        }
-
-        [TestMethod]
-        public void TestCreateSavedMailFolderTest()
         {
             DeleteTestInboxFolder();
 
@@ -85,18 +76,18 @@ namespace UnitTestsForSaveMail
         public void TestMoveToSavedMailFolder()
         {
             MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            validMailItem.Sender = outlookAddress.AddressEntry;
+            List<object> selectedItems = new List<object> { validMailItem };
+            SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName);
             MailItem movedItem = (MailItem)inbox.Folders[inboxFolderName].Items[1];
 
             Assert.IsTrue(movedItem.Sender.Address.Equals(validMailItem.Sender.Address));
-            DeleteTestInboxFolder();
         }
 
         private void DeleteTestInboxFolder()
         {
-            MessageBox.Show("searching");
             foreach (Folder f in inbox.Folders) {
                 if (f.Name.Equals(inboxFolderName)) {
-                    MessageBox.Show(inboxFolderName);
                     f.Delete();
                 }
             }

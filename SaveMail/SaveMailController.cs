@@ -78,7 +78,7 @@ namespace SaveMail
                     }
 
                     String currentFolder = email.Parent.FolderPath.ToString();
-                    System.Windows.Forms.MessageBox.Show(currentFolder);
+
                     if (!currentFolder.Substring(currentFolder.Length - 10).Equals(inboxFolderName))
                     {
                         email.Move(inbox.Folders[inboxFolderName]);
