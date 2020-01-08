@@ -77,7 +77,9 @@ namespace SaveMail
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
 
-                    if (email.Parent.FolderPath.ToString().Equals(inboxFolderName))
+                    String currentFolder = email.Parent.FolderPath.ToString();
+                    System.Windows.Forms.MessageBox.Show(currentFolder);
+                    if (!currentFolder.Substring(currentFolder.Length - 10).Equals(inboxFolderName))
                     {
                         email.Move(inbox.Folders[inboxFolderName]);
                     }
