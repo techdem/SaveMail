@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UnitTestsForSaveMail.TestSaveMailController">
+    <Position X="2.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAABAABCgBAAAAAAACAAAAgAhAAAgAAQIAAA=</HashCode>
+      <FileName>TestSaveMailController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTestsForSaveMail.TestSaveMailLogging">
+    <Position X="5.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABiAAAAAAAAAAAAABIAACAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>TestSaveMailLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTestsForSaveMail.TestSaveMailModel">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQABQAAAAAAAAAAgQAAAAAAAACAAAAAgACAAAAAIAAA=</HashCode>
+      <FileName>TestSaveMailModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
