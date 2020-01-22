@@ -12,6 +12,7 @@ namespace UnitTestsForSaveMail
     {
         readonly static string applicationName = "SaveMail";
         readonly static String inboxFolderName = "TestSaveMail";
+        Boolean moveItems = true;
         readonly static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
 
         Folder inbox = (Folder) outlookApplication.Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
@@ -39,9 +40,9 @@ namespace UnitTestsForSaveMail
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
 
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName).Equals("saveSuccess"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName, moveItems).Equals("saveSuccess"));
             Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg"));
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems, inbox, inboxFolderName).Equals("saveCancelled"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(negativeResult, selectedItems, inbox, inboxFolderName, moveItems).Equals("saveCancelled"));
             File.Delete(savePath + "\\4501-01-01 0000 test@internal.address valid subject.msg");
         }
 
@@ -54,7 +55,7 @@ namespace UnitTestsForSaveMail
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
 
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName).Equals("saveSuccess"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName, moveItems).Equals("saveSuccess"));
             Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address valid subject o(...).msg"));
             File.Delete(savePath + "\\4501-01-01 0000 test@internal.address valid subject o(...).msg");
         }
@@ -67,7 +68,7 @@ namespace UnitTestsForSaveMail
             List<object> selectedItems = new List<object> { validMailItem };
             Directory.CreateDirectory(savePath);
 
-            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName).Equals("saveSuccess"));
+            Assert.IsTrue(SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName, moveItems).Equals("saveSuccess"));
             Assert.IsTrue(File.Exists(savePath + "\\4501-01-01 0000 test@internal.address No Subject.msg"));
             File.Delete(savePath + "\\4501-01-01 0000 test@internal.address No Subject.msg");
         }
@@ -78,7 +79,7 @@ namespace UnitTestsForSaveMail
             MailItem validMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             validMailItem.Sender = outlookAddress.AddressEntry;
             List<object> selectedItems = new List<object> { validMailItem };
-            SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName);
+            SaveMail.SaveMailController.SaveSelected(okResult, selectedItems, inbox, inboxFolderName, moveItems);
             MailItem movedItem = (MailItem)inbox.Folders[inboxFolderName].Items[1];
 
             Assert.IsTrue(movedItem.Sender.Address.Equals(validMailItem.Sender.Address));

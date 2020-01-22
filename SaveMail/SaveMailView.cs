@@ -51,5 +51,12 @@ namespace SaveMail
                 MessageBox.Show("Operation cancelled.", "SaveMail");
             }
         }
+
+        // Ask the user if they would like to move the selected e-mails out of the inbox
+        public static Boolean Question()
+        {
+            return MessageBox.Show("Would you also like to move the selected e-mails out of the Inbox and into the Saved Mail folder?", "Save Mail", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes ? true : false;
+        }
+        
     }
 }

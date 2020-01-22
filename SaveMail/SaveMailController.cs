@@ -28,11 +28,23 @@ namespace SaveMail
             String inboxFolderName = "Saved Mail";
 
             CreateSavedMailFolder(inbox, inboxFolderName);
-
+            
+            Boolean moveItems = false;            
+            
             if (selectedEmails.Count != 0)
             {
+                String currentFolder = ((MailItem)selectedEmails[0]).Parent.FolderPath.ToString();
+
+                SaveMailLogger.LogAction(currentFolder);
+
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
-                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox, inboxFolderName));
+
+                if (currentFolder.Substring(currentFolder.Length - "Inbox".Length).Equals("Inbox") && SaveMailView.Question())
+                {
+                    moveItems = true;
+                }
+
+                SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox, inboxFolderName, moveItems));
             }
             else
             {
@@ -56,7 +68,7 @@ namespace SaveMail
         }
 
         // Invoke a sanity check for the path and save e-mails to drive
-        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox, String inboxFolderName)
+        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox, String inboxFolderName, Boolean moveItems)
         {
             int savedNumber = 0;
 
@@ -77,11 +89,9 @@ namespace SaveMail
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
 
-                    String currentFolder = email.Parent.FolderPath.ToString();
-
-                    if (!currentFolder.Substring(currentFolder.Length - 10).Equals(inboxFolderName))
+                    if (moveItems)
                     {
-                        email.Move(inbox.Folders[inboxFolderName]);
+                        email.Move(inbox.Folders[inboxFolderName]);                            
                     }
 
                     savedNumber++;

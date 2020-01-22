@@ -22,7 +22,7 @@ namespace SaveMail
             {
                 if (!(item is MailItem))
                 {
-                    return new List<object>();
+                    continue;
                 }
                 emailItems.Add(item);
             }
