@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Outlook;
 using Microsoft.Office.Tools.Ribbon;
+using System.Windows.Forms;
 
 namespace SaveMail
 {
@@ -22,7 +23,7 @@ namespace SaveMail
             SaveMailLogger.LogAction("Selected " + selectedEmails.Count + " emails.");
 
             Folder inbox = (Folder)
-                new Application().ActiveExplorer().Session.GetDefaultFolder
+                new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Session.GetDefaultFolder
                 (OlDefaultFolders.olFolderInbox);
 
             String inboxFolderName = "Saved Mail";
@@ -39,7 +40,7 @@ namespace SaveMail
 
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
 
-                if (currentFolder.Substring(currentFolder.Length - "Inbox".Length).Equals("Inbox") && SaveMailView.Question())
+                if ((DialogResult)savePath["dialogResult"] == DialogResult.OK && currentFolder.Substring(currentFolder.Length - "Inbox".Length).Equals("Inbox") && SaveMailView.Question())
                 {
                     moveItems = true;
                 }
