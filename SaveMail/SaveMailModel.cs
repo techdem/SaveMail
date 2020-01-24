@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -26,6 +27,8 @@ namespace SaveMail
                 }
                 emailItems.Add(item);
             }
+
+            Marshal.ReleaseComObject(selectedEmails);
 
             return emailItems;
         }
@@ -106,9 +109,12 @@ namespace SaveMail
 
                 Regex replaceIllegalCharacters = new Regex("[\\/:*?\"<>|]");
 
-                email.Subject = String.IsNullOrEmpty(email.Subject) ? "No Subject" : replaceIllegalCharacters.Replace(email.Subject, "");
+                //email.Subject = String.IsNullOrEmpty(email.Subject) ? "No Subject" : replaceIllegalCharacters.Replace(email.Subject, "");
 
-                return email.Subject.Length > 15 ? email.Subject.Substring(0, 15) + "(...)" : email.Subject;
+                //return email.Subject.Length > 15 ? email.Subject.Substring(0, 15) + "(...)" : email.Subject;
+                String subject = String.IsNullOrEmpty(email.Subject) ? "No Subject" : replaceIllegalCharacters.Replace(email.Subject, "");
+
+                return subject.Length > 15 ? subject.Substring(0, 15) + "(...)" : subject;
             }
 
             return "saveCancelled";

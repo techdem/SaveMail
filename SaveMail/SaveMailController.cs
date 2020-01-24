@@ -22,19 +22,17 @@ namespace SaveMail
             List<object> selectedEmails = SaveMailModel.GetSelectedEmails();
             SaveMailLogger.LogAction("Selected " + selectedEmails.Count + " emails.");
 
-            Folder inbox = (Folder)
-                new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Session.GetDefaultFolder
-                (OlDefaultFolders.olFolderInbox);
+            Folder inbox = (Folder) new Microsoft.Office.Interop.Outlook.Application().ActiveExplorer().Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
 
-            String inboxFolderName = "Saved Mail";
+            string inboxFolderName = "Saved Mail";
 
             CreateSavedMailFolder(inbox, inboxFolderName);
             
-            Boolean moveItems = false;            
+            bool moveItems = false;            
             
             if (selectedEmails.Count != 0)
             {
-                String currentFolder = ((MailItem)selectedEmails[0]).Parent.FolderPath.ToString();
+                string currentFolder = ((MailItem)selectedEmails[0]).Parent.FolderPath.ToString();
 
                 SaveMailLogger.LogAction("Selected from: " + currentFolder);
 
@@ -55,7 +53,7 @@ namespace SaveMail
         }
 
         // Create a folder in user inbox
-        public static String CreateSavedMailFolder(Folder inbox, String inboxFolderName)
+        public static string CreateSavedMailFolder(Folder inbox, string inboxFolderName)
         {
             try {
                 Folder checkFolder = (Folder)inbox.Folders[inboxFolderName];
@@ -70,32 +68,34 @@ namespace SaveMail
         }
 
         // Invoke a sanity check for the path and save e-mails to drive
-        public static String SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox, String inboxFolderName, Boolean moveItems)
+        public static string SaveSelected(Dictionary<object, object> savePath, List<object> emailItems, Folder inbox, String inboxFolderName, Boolean moveItems)
         {
             int savedNumber = 0;
 
             foreach (MailItem email in emailItems)
             {
-                String pathCheckResult = SaveMailModel.PathCheck(savePath, email);
+                string pathCheckResult = SaveMailModel.PathCheck(savePath, email);
 
                 if (!pathCheckResult.Equals("pathInvalid") && !pathCheckResult.Equals("saveCancelled"))
                 {
                     if (email.ReceivedByName == null)
                     {
-                        String emailDestination = SaveMailModel.GetEmailAddress(email, "outgoing");
+                        string emailDestination = SaveMailModel.GetEmailAddress(email, "outgoing");
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailDestination + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
                     else
                     {
-                        String emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
+                        string emailSender = SaveMailModel.GetEmailAddress(email, "incoming");
                         email.SaveAs(savePath["selectedPath"] + "\\" + email.ReceivedTime.ToString("yyyy-MM-dd HHmm") + " " + emailSender + " " + pathCheckResult + ".msg", OlSaveAsType.olMSG);
                     }
 
                     if (moveItems)
                     {
                         email.Move(inbox.Folders[inboxFolderName]);
+                        SaveMailLogger.LogAction("Moving item to " + inboxFolderName + " folder");
                     }
 
+                    SaveMailLogger.LogAction("Saving item " + (savedNumber+1) + " with " + email.Size.ToString() + " bytes");
                     savedNumber++;
                 }
                 else

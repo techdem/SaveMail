@@ -11,8 +11,8 @@ namespace UnitTestsForSaveMail
     public class TestSaveMailController
     {
         readonly static string applicationName = "SaveMail";
-        readonly static String inboxFolderName = "TestSaveMail";
-        readonly Boolean moveItems = true;
+        readonly static string inboxFolderName = "TestSaveMail";
+        readonly bool moveItems = true;
         readonly static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
 
         readonly Folder inbox = (Folder) outlookApplication.Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
