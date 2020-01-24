@@ -12,11 +12,11 @@ namespace UnitTestsForSaveMail
     {
         readonly static string applicationName = "SaveMail";
         readonly static String inboxFolderName = "TestSaveMail";
-        Boolean moveItems = true;
+        readonly Boolean moveItems = true;
         readonly static Microsoft.Office.Interop.Outlook.Application outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
 
-        Folder inbox = (Folder) outlookApplication.Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
-        Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
+        readonly Folder inbox = (Folder) outlookApplication.Session.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
+        readonly Recipient outlookAddress = outlookApplication.Session.CreateRecipient("test@internal.address");
 
         readonly static string savePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Local\\" + applicationName;
         readonly Dictionary<object, object> okResult = new Dictionary<object, object> { { "dialogResult", DialogResult.OK }, { "selectedPath", savePath } };

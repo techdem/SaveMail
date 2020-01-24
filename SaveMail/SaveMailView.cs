@@ -57,6 +57,5 @@ namespace SaveMail
         {
             return MessageBox.Show("Would you also like to move the selected e-mails out of the Inbox and into the Saved Mail folder?", "Save Mail", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes ? true : false;
         }
-        
     }
 }

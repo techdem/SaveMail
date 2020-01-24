@@ -63,7 +63,7 @@ namespace SaveMail
         // Determine if the email is internal or external
         public static String GetEmailAddress(MailItem email, String direction)
         {
-            String address = "";
+            String address;
 
             if (email.SenderEmailType == "EX")
             {
@@ -74,10 +74,11 @@ namespace SaveMail
                 {
                     ExchangeUser internalAddress = addressEntry.GetExchangeUser();
 
-                    if (internalAddress != null)
-                    {
-                        address = internalAddress.PrimarySmtpAddress;
-                    }
+                    address = internalAddress.PrimarySmtpAddress;
+                }
+                else if (addressEntry.Members != null)
+                {
+                    address = addressEntry.GetExchangeDistributionList().PrimarySmtpAddress;
                 }
                 else
                 {

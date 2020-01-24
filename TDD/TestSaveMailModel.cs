@@ -37,6 +37,9 @@ namespace UnitTestsForSaveMail
             MailItem incominglMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
             incominglMailItem.Sender = outlookAddress.AddressEntry;
 
+            //MailItem incominglMailItem = (MailItem)outlookApplication.CreateItem(OlItemType.olMailItem);
+            //incominglMailItem. = outlookAddress.AddressEntry;
+
             Assert.AreEqual("test@internal.address", SaveMail.SaveMailModel.GetEmailAddress(incominglMailItem, "incoming"));
         }
 

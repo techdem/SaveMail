@@ -36,13 +36,14 @@ namespace SaveMail
             {
                 String currentFolder = ((MailItem)selectedEmails[0]).Parent.FolderPath.ToString();
 
-                SaveMailLogger.LogAction(currentFolder);
+                SaveMailLogger.LogAction("Selected from: " + currentFolder);
 
                 Dictionary<object, object> savePath = SaveMailView.ShowBrowserDialog();
 
                 if ((DialogResult)savePath["dialogResult"] == DialogResult.OK && currentFolder.Substring(currentFolder.Length - "Inbox".Length).Equals("Inbox") && SaveMailView.Question())
                 {
                     moveItems = true;
+                    SaveMailLogger.LogAction("Attempting to move selected out of the inbox...");
                 }
 
                 SaveMailView.Confirmation(SaveSelected(savePath, selectedEmails, inbox, inboxFolderName, moveItems));
@@ -92,7 +93,7 @@ namespace SaveMail
 
                     if (moveItems)
                     {
-                        email.Move(inbox.Folders[inboxFolderName]);                            
+                        email.Move(inbox.Folders[inboxFolderName]);
                     }
 
                     savedNumber++;
